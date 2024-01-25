@@ -62,10 +62,13 @@ def text(message):
                 maximum = max(flatten_data)
                 minimum = min(flatten_data)
                 with open(plot_path, "rb") as photo:
+
+                    Logger.info("Sending photo")
                     if meassure_type == "temperature":
                         bot.send_photo(chat_id=message.chat.id, photo=photo, caption=f'🔥 Max 🔥 : *{maximum}*\n❄️ Min ❄️ : *{minimum}*\n❗️ Now ❗️ : *{flatten_data[-1]}*', parse_mode='Markdown', timeout=10)
                     else:
                         bot.send_photo(chat_id=message.chat.id, photo=photo, caption=f'🌧️ Max 🌧️ : *{maximum}*\n💧 Min 💧 : *{minimum}*\n❗️ Now ❗️ : *{flatten_data[-1]}*', parse_mode='Markdown', timeout=10)
+                
             else:
                 bot.send_message(message.chat.id, "Данные не были получены")  
     
