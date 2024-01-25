@@ -28,7 +28,7 @@ class Screen:
         while True:
             if self.game_started and not self.rosh_killed:
                 print("try to roshan")
-                rosh_on_screen = pyautogui.locateOnScreen("pc_controller/roshan.png", confidence=0.7, region=(0, 750, 300, 400))
+                rosh_on_screen = pyautogui.locateOnScreen("pc_controller/roshan.png", confidence=0.7, ) # region=(0, 750, 300, 400) 
                 if rosh_on_screen is not None:
                     self.rosh_killed = True
                     Logger.info("Roshan killed!")
