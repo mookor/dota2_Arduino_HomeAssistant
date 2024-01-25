@@ -34,6 +34,6 @@ def draw_graph(flatten_data, dates, meassure_type):
     # Отображаем легенду
     plt.legend()
 
-    fig.savefig(plot_path, format='png')
+    fig.savefig(plot_path, format='png', dpi = 75)
     Logger.info("graph was drawn")
     return True

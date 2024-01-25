@@ -61,14 +61,18 @@ def text(message):
             if draw_graph(flatten_data, dates, meassure_type):
                 maximum = max(flatten_data)
                 minimum = min(flatten_data)
-                with open(plot_path, "rb") as photo:
+                try:
+                    with open(plot_path, "rb") as photo:
 
-                    Logger.info("Sending photo")
-                    if meassure_type == "temperature":
-                        bot.send_photo(chat_id=message.chat.id, photo=photo, caption=f'🔥 Max 🔥 : *{maximum}*\n❄️ Min ❄️ : *{minimum}*\n❗️ Now ❗️ : *{flatten_data[-1]}*', parse_mode='Markdown', timeout=10)
-                    else:
-                        bot.send_photo(chat_id=message.chat.id, photo=photo, caption=f'🌧️ Max 🌧️ : *{maximum}*\n💧 Min 💧 : *{minimum}*\n❗️ Now ❗️ : *{flatten_data[-1]}*', parse_mode='Markdown', timeout=10)
-                
+                        Logger.info("Sending photo")
+                        if meassure_type == "temperature":
+                            bot.send_photo(chat_id=message.chat.id, photo=photo, caption=f'🔥 Max 🔥 : *{maximum}*\n❄️ Min ❄️ : *{minimum}*\n❗️ Now ❗️ : *{flatten_data[-1]}*', parse_mode='Markdown', timeout=100)
+                        else:
+                            bot.send_photo(chat_id=message.chat.id, photo=photo, caption=f'🌧️ Max 🌧️ : *{maximum}*\n💧 Min 💧 : *{minimum}*\n❗️ Now ❗️ : *{flatten_data[-1]}*', parse_mode='Markdown', timeout=100)
+                except Exception as e:
+                    Logger.info("Can't send photo: " + str(e))
+                    bot.send_message(message.chat.id, "Не могу отправить график")
+                    bot.send_message(message.chat.id, f'Max : *{maximum}*\nMin : *{minimum}*\n Now  : *{flatten_data[-1]}*', parse_mode='Markdown')
             else:
                 bot.send_message(message.chat.id, "Данные не были получены")  
     
