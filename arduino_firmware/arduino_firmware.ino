@@ -154,7 +154,7 @@ void loop()
         { 
           to_lotus = get_seconds_to_moment(start_game_unix, 3 * 60);
           draw_lotus(to_lotus);
-          to_exp = get_seconds_to_moment(start_game_unix, 7 * 3);
+          to_exp = get_seconds_to_moment(start_game_unix, 7 * 60);
           draw_exp(to_exp);
         }
         if (rosh_died)
