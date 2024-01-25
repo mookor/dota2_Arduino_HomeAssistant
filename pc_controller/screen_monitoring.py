@@ -10,6 +10,7 @@ class Screen:
         self.rosh_killed = False
         self.start_thread = Thread(target=self.check_started)
         self.rosh_thread = Thread(target=self.check_rosh_killed)
+        self.stop_threads = False
     def check_started(self):
         while True:
             if not self.game_started:
@@ -19,9 +20,8 @@ class Screen:
                     self.game_started = True
                     Logger.info("Game started!")
                     self.arduino_controller.start_game()
-            # else:
-            #     Logger.info("break game_started")
-            #     break
+            if self.stop_threads:
+                break
             time.sleep(0.01)
     
     def check_rosh_killed(self):
@@ -33,22 +33,20 @@ class Screen:
                     self.rosh_killed = True
                     Logger.info("Roshan killed!")
                     self.arduino_controller.rosh_killed()
-            # else:
-            #     Logger.info("break rosh_killed")
-            #     break
+                    
+            if self.stop_threads:
+                break
             time.sleep(0.01)
 
     def start_threads(self):
         self.start_thread.start()
         self.rosh_thread.start()
 
-    def stop_all_threads(self, game, rosh):
-        self.game_started = True
-        self.rosh_killed = True
+    def stop_all_threads(self):
+        Logger.info("Stop all threads...")
+        self.stop_threads = True
         self.start_thread.join()
         self.rosh_thread.join()
-        self.game_started = game
-        self.rosh_killed = rosh
         time.sleep(0.01)
         Logger.info("All threads stopped")
 

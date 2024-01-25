@@ -10,13 +10,22 @@ class Arduino_controller:
     def __init__(self):
         self.com_port = self.get_arduino_comport()
         self.weather_db = WeatherDatabase()
+        self.read_temperature_and_humidity_flag = True
         if self.com_port:
             self.ser = serial.Serial(self.com_port, 9600)
         else:
             raise Exception("No Arduino connected")
     
     def start_temp_humidity_monitoring(self):
-        self.th_thread = Thread(target=self.read_temperature_and_humidity).start()
+        self.th_thread = Thread(target=self.read_temperature_and_humidity)
+        self.th_thread.start()
+
+    def stop_threads(self):
+        Logger.info("Stop temperature and humidity monitoring...")
+        self.read_temperature_and_humidity_flag = False
+        self.th_thread.join()
+        Logger.info("Temperature and humidity monitoring stopped")
+        
 
     def get_arduino_comport(self):
         arduino_ports = [
@@ -39,7 +48,7 @@ class Arduino_controller:
         self.ser.write(b'4')
     
     def read_temperature_and_humidity(self):
-        while True:
+        while self.read_temperature_and_humidity_flag:
             try:
                 if self.ser:
                     data = self.ser.readline().decode('utf-8').strip()
