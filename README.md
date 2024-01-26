@@ -1,45 +1,53 @@
+
+[![en](https://img.shields.io/badge/lang-en-red.svg)](README.md)
+[![ru](https://img.shields.io/badge/lang-ru-blue.svg)](README.ru.md)
+
 # dota2Arduino_HomeAssistan
 ![alt text](data/my.jpg)\
-Набор программ на C / Python, позволяющий легко контролировать тайминги респавна рошана / лотусов / рун экспы
-+ сама установка сама по себе выполняет роль часов с текущей датой, также на экране отображает текущая влажность и температура в комнате
-+ показатели температуры и влажности можно отслеживать с помощью телеграмм бота, есть возможность как строить графики за разные промежутки времени, так и смотреть просто текущие показатели
+A set of programs in C/Python that allows easy monitoring of respawn timings for Roshan/Lotuses/Power-up Runes.
++ The installation itself serves as a clock with the current date, also displaying the current room humidity and temperature on the screen.
++ Temperature and humidity readings can be tracked through a Telegram bot, with the ability to create graphs for different time intervals and view current readings.
 ![alt text](data/tg_example.png)
-## описание работы и подготовка системы
-### Установка
-Достаточно запустить `pip install -e .` все нужные зависимости будут установлены
-### Arduino
-По сути можно собрать отдельное устройство на базе Arduino nano с помощью которого можно отслеживать тайминги, но это не очень удобно, ибо тыкать на кнопку устройства во время игры не совсем удобно
+## Description of Operation and System Preparation
 
-Сборка производится по следующей схеме
-Резисторы на диодах имеют номинал в ~500 Ом, подтяжка для кнопки - 10КОм
+### Installation
+Simply run `pip install -e .` and all necessary dependencies will be installed.
+### Arduino
+In essence, you can assemble a separate device based on Arduino Nano to track timings, but pressing the device button during the game is not very convenient.
+
+Assembly is done according to the following scheme.
+The resistors on the diodes have a nominal value of ~500 Ohms, and the pull-up for the button is 10k Ohms.
 ![alt text](data/scheme.png)
 
-### Управление на Arduino
-- 2 клика по кнопке запускает таймер игры, на экран выводится трехминутный отсчет, показывающий тайминги лотусов, также, за 15 секунд до лотуса начинает мигать светодиод, если включен звук - пищалка проиграет мелодию, когда на таймере останется 10 секунд
-- 1 клик по кнопке сигнализирует о том, что рошан умер, запускается два таймера: на 11 минут и 8 минут соответсвенно, остальное аналогично первому пункту 
-- удержание кнопки переключит флаг, отвечающий за воспроизведение звука, по горящему диоду можно определить включен звук или нет
+### Arduino Control
+- A double click on the start button initiates the game timer, displaying a three-minute countdown on the screen, showing Lotus timings. Also, 15 seconds before Lotus spawns, the LED starts blinking, and if sound is enabled, the buzzer plays a melody when there are 10 seconds left on the timer.
+- A single click on the button signals that Roshan has died, initiating two timers: for 11 and 8 minutes respectively. The rest is similar to the first point.
+- Holding the button will toggle the flag responsible for sound playback. The lit LED indicates whether the sound is on or off.
 
-### Управление с ПК 
-! Для управления с пк нужно, чтобы плата питалась через USB вашего компьютера !\
-Можно запусть как обычный питоновский скрипт `main.py`, так и создать exe-файл, которым мы будем пользоваться
+### PC Control
+To control from a PC, the board must be powered via your computer's USB !
+You can run it as a regular Python script with `main.py` or create an exe file for ease of use.
 
-Для создания exe-файла достаточно выполнить `pyinstaller --onefile --noconsole .\main.py`
+To create an exe file, simply run `pyinstaller --onefile --noconsole .\main.py`\
+I do not guarantee the functionality of this method; it has not been tested.\
+In the dist directory, you'll find the executable file that can be easily launched with a double click.
 
-В директории dist будет лежать исполняемый файл, который спокойно запускается при даблклике 
-
-- При нажатии F6 запускается таймер старта игры и лотусов соответсвенно
-- При нажатии F7 оповестим ардуинку, что рошан умер
-- При нажатии F2 переключится флаг, отвечающий за воспроизведение звуков (звук воспроизводится за 15 секунд до наступления любого из таймингов)\
-За работоспособность данного метода не отвечаю, не тестировал \
+- Pressing F6 starts the game and Lotus timers.
+- Pressing F7 notifies Arduino that Roshan has died.
+- Pressing F2 toggles the flag responsible for sound playback (sound plays 15 seconds before any of the timings)\
+  \
 ![alt text](data/rosh_example.jpg)
 
-### Автоматическое управление 
-Во время работы скрипта идет сканирование определенных областей экрана, поэтому флаг старта игры может переключиться тогда, когда на часах в доте будет 00:00\
-Таким же образом идет проверка на то - жив рошан или нет, при убийстве рошана флаг также переключится автоматом \
-При завершении игры следует нажать F6 / два раза на кнопку ардуины, автоматического определения конца игры нет 
+### Automatic Control
 
-#### Запуск на Windows
-Для пользователей windows достаточно заменить пути в файле `run.bat` + сделать ярлык в автозапуске/рабочем столе 
+During script execution, certain areas of the screen are scanned. Therefore, the game start flag may switch when the in-game clock reaches 00:00\
+Similarly, there is a check for whether Roshan is alive or not; the flag switches automatically upon Roshan's death \
+When the game ends, press F6/two clicks on the Arduino button; there is no automatic detection of the end of the game 
 
-## дополнительно
-В папке data есть иконка для приложения + модель корпуса для печати 
+#### Running on Windows
+
+For Windows users, simply replace the paths in the `run.bat` file and create a shortcut in the startup/desktop
+
+## Additional Information
+
+In the data folder, there is an icon for the application, and a model of the case for printing.
