@@ -54,8 +54,9 @@ void alarm()
   int freq = random(800,1601);
   tone(11, freq, 400);
 }
-void buttons(char signal)
+void buttons(String datas)
 {
+    char signal = datas[0];
     butt1.tick();  // обязательная функция отработки. Должна постоянно опрашиваться
     if (butt1.isDouble() || signal == 'g')
     {
@@ -188,15 +189,10 @@ void set_time_from_char_array(String readData)
 }
 void loop()
 {
-  char signal = Serial.read();
-  // char readData[33];//The character array is used as buffer to read into.
-  // int x = Serial.readBytes(readData,33);//10 is the length of data to read.
-  // 
-
   String datas = Serial.readStringUntil('\n');
   set_time_from_char_array(datas);
   delay(20);
-  buttons(signal);
+  buttons(datas);
   
   songing ? digitalWrite(9, HIGH): digitalWrite(9, 0);
 

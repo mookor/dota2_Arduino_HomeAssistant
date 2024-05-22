@@ -40,19 +40,19 @@ class Arduino_controller:
     
     def start_game(self):
         Logger.info("write 5(start) to arduino")
-        self.ser.write(b'g')
+        self.ser.write(b'g\n')
     
     def rosh_killed(self):
         
         Logger.info("write 2(rosh) to arduino")
-        self.ser.write(b'r')
+        self.ser.write(b'r\n')
 
     def alarm(self):
         Logger.info("write a(alarm) to arduino")
-        self.ser.write(b'a')
+        self.ser.write(b'a\n')
         
     def sound(self):
-        self.ser.write(b'b')
+        self.ser.write(b'b\n')
     
     def send_datetime(self):
         current_datetime = datetime.now().strftime('s:%S m:%M h:%H d:%d min:%m y:%Y')
@@ -64,7 +64,6 @@ class Arduino_controller:
         while self.read_temperature_and_humidity_flag:
             try:
                 uptime_delta = datetime.now() - self.last_uptime
-                print(uptime_delta.days)
                 if  uptime_delta.days > self.time_uptime:
                     self.send_datetime()
                     self.last_uptime = datetime.now()
