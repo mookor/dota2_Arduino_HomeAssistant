@@ -21,6 +21,7 @@ bool start = false;
 bool songing = false;
 bool led_up = true;
 bool lotus = false;
+bool alarm_flag = false;
 
 const char* months[] =
  {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
@@ -44,28 +45,43 @@ void setup()
   pinMode(9, OUTPUT);
   to_rosh.minutes = 1;
   to_rosh.seconds = 1;
+
+  // rtc_set_time();
 }
 
+void alarm()
+{
+  int freq = random(800,1601);
+  tone(11, freq, 400);
+}
 void buttons(char signal)
 {
     butt1.tick();  // обязательная функция отработки. Должна постоянно опрашиваться
-    if (butt1.isDouble() || signal == '5')
+    if (butt1.isDouble() || signal == 'g')
     {
         start_game_unix = get_unix();
         start = !start;
         lotus = !lotus;
         clear_lcd();
     }
-    if (butt1.isSingle() || signal == '2')
+    if (butt1.isSingle() || signal == 'r')
     {
         kill_rosh_unix = get_unix();
         start = true;
         rosh_died = true;
         clear_lcd();
     }
-    if (butt1.isHolded() || signal == '4')
+    if (butt1.isHolded() || signal == 'b')
     {
         songing = !songing;
+    }
+    if (signal == 'a')
+    {
+      alarm_flag = true;
+    }
+    if (butt1.isTriple())
+    {
+      alarm_flag = false;
     }
 }
 
@@ -128,9 +144,57 @@ void draw_rosh(time timing_max)
   beep(timing_max);
 }
 
+void set_time_from_char_array(String readData)
+{
+  // second = third and fourth byte
+  Serial.println(readData);
+  if (readData[0] == 's')
+  {
+    char str[3];
+    str[0] = readData[2];
+    str[1] = readData[3];
+    str[2] = '\0';
+    int8_t seconds = atoi(str);
+    // minute = fifth and sixth byte
+    str[0] = readData[7];
+    str[1] = readData[8];
+    str[2] = '\0';
+    int8_t minutes = atoi(str);
+    // hour = seventh and eighth byte
+    str[0] = readData[12];
+    str[1] = readData[13];
+    str[2] = '\0';
+    int8_t hours = atoi(str);
+    // date = nineth and tenth byte
+    str[0] = readData[17];
+    str[1] = readData[18];
+    str[2] = '\0';
+    int8_t date = atoi(str);
+    // month = eleventh and twelfth byte
+    str[0] = readData[24];
+    str[1] = readData[25];
+    str[2] = '\0';
+    int8_t month = atoi(str);
+    // year = thirteenth and fourteenth byte
+    char str2[5];
+    str2[0] = readData[29];
+    str2[1] = readData[30];
+    str2[2] = readData[31];
+    str2[3] = readData[32];
+    str2[4] = '\0';
+    int16_t year = atoi(str2);
+    rtc_set_time(seconds, minutes, hours, date, month, year);
+  }
+}
 void loop()
 {
   char signal = Serial.read();
+  // char readData[33];//The character array is used as buffer to read into.
+  // int x = Serial.readBytes(readData,33);//10 is the length of data to read.
+  // 
+
+  String datas = Serial.readStringUntil('\n');
+  set_time_from_char_array(datas);
   delay(20);
   buttons(signal);
   
@@ -179,6 +243,10 @@ void loop()
         print_lcd((String) "h:" + h, 9, 1);
         
     }
+
+    if (alarm_flag)
+      alarm();
+
     cycle_millis = millis();
   }
 }

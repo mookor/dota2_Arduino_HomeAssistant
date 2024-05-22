@@ -2,9 +2,10 @@
 #include "timer.h"
 MicroDS3231 rtc;
 
-void rtc_set_time()
+void rtc_set_time(int8_t seconds, int8_t minutes, int8_t hours, int8_t date, int8_t month, int16_t year)
 {
-    rtc.setTime(BUILD_SEC, BUILD_MIN, BUILD_HOUR, BUILD_DAY, BUILD_MONTH, BUILD_YEAR);
+  // Serial.println((String) "s: " + seconds + " m: " + minutes + " h: " + hours + " d: " + date + " m: " + month + " y: " + year);
+  rtc.setTime(seconds, minutes, hours, date, month, year);
 }
 
 uint32_t get_unix()
@@ -21,6 +22,7 @@ uint8_t get_date()
 {
   return rtc.getDate();
 }
+
 
 String get_time_string()
 {
