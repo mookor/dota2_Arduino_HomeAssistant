@@ -11,6 +11,7 @@ class Screen:
         self.start_thread = Thread(target=self.check_started)
         self.rosh_thread = Thread(target=self.check_rosh_killed)
         self.stop_threads = False
+        
     def check_started(self):
         while True:
             if not self.game_started:
