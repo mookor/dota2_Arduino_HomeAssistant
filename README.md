@@ -4,7 +4,7 @@
 
 # dota2Arduino_HomeAssistan
 ![alt text](data/my.jpg)\
-A set of programs in C/Python that allows easy monitoring of respawn timings for Roshan/Lotuses/Power-up Runes.
+A set of programs in C/Python that allows easy monitoring of respawn timings for Roshan/Lotuses/Wisdom Runes.
 + The installation itself serves as a clock with the current date, also displaying the current room humidity and temperature on the screen.
 + Temperature and humidity readings can be tracked through a Telegram bot, with the ability to create graphs for different time intervals and view current readings.
   
