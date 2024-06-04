@@ -52,3 +52,6 @@ For Windows users, simply replace the paths in the `run.bat` file and create a s
 ## Additional Information
 
 In the data folder, there is an icon for the application, and a model of the case for printing.
+
+## Project scheme
+![](data/project_scheme.png)
