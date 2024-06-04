@@ -68,7 +68,9 @@ void buttons(String datas)
     if (butt1.isSingle() || signal == 'r')
     {
         kill_rosh_unix = get_unix();
+        start_game_unix = get_unix();
         start = true;
+        lotus = true;
         rosh_died = true;
         clear_lcd();
     }
