@@ -35,7 +35,7 @@ In the dist directory, you'll find the executable file that can be easily launch
 
 - Pressing F6 starts the game and Lotus timers.
 - Pressing F7 notifies Arduino that Roshan has died.
-- Pressing F2 toggles the flag responsible for sound playback (sound plays 15 seconds before any of the timings)\
+- Pressing F8 toggles the flag responsible for sound playback (sound plays 15 seconds before any of the timings)\
   \
 ![alt text](data/rosh_example.jpg)
 
