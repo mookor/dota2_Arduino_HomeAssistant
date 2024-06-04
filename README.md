@@ -9,6 +9,9 @@ A set of programs in C/Python that allows easy monitoring of respawn timings for
 + Temperature and humidity readings can be tracked through a Telegram bot, with the ability to create graphs for different time intervals and view current readings.
   
 ![alt text](data/tg_example.png)
+
+*charts are not supported right now, refactoring of the bot is required. There are implemented graphs from commit:* `68ac399d1c689f7ca0e62529d537f7c81e8da1c6`
+
 ## Description of Operation and System Preparation
 
 ### Installation
