@@ -1,3 +1,3 @@
 @echo off
-call C:\Users\username\Desktop\dota2Arduino_HomeAssistan\venv\Scripts\activate
-start /B pythonw.exe C:\Users\username\Desktop\dota2Arduino_HomeAssistan\main.pyw
+call G:\dota2_v2\venv\Scripts\activate
+start /B pythonw.exe G:\dota2_v2\main.pyw
